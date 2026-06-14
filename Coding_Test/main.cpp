@@ -1,44 +1,64 @@
 #include <iostream>
 #include <string>
-
-#include <cctype>
+#include <vector>
 
 using namespace std;
 
+string solution(string my_string, string overwrite_string, int s);
+
 int main(void)
 {
-    /* 내 풀이 */
-    string str;
-    cin >> str;
-
-    for (int i = 0; i < str.length(); i++)
-    {
-        if (str[i] >= 'A' && str[i] <= 'Z')
-        {
-            str[i] = tolower(str[i]);
-        }
-        else if (str[i] >= 'a' && str[i] <= 'z')
-        {
-            str[i] = toupper(str[i]);
-        }
-        else
-            return 0;
-    }
-    cout << str;
-
-    /* 좋다고 생각한 풀이 */
-    string str;
-    cin >> str;
-
-    for (char c : str)
-    {
-        if (c >= 'A' && c <= 'Z')
-            c += 'a' - 'A';
-        else
-            c -= 'a' - 'A';
-
-        cout << c;
-    }
+    cout << solution("He11oWor1d", "lloWorl", 2);
 
     return 0;
+}
+
+string solution(string my_string, string overwrite_string, int s) {
+
+    /* 내 풀이 */
+    string answer{};
+
+    int iMaxIndex = my_string.length();
+    int iIndex{};
+    bool isLarge{ false };
+
+    if (iMaxIndex < overwrite_string.length())
+    {
+        iMaxIndex = overwrite_string.length();
+    }
+    else
+    {
+        isLarge = true;
+    }
+
+    for (int i = 0; i < s; ++i)
+    {
+        answer += my_string[i];
+        iIndex++;
+    }
+
+    answer += overwrite_string;
+    iIndex += overwrite_string.length();
+
+    if (isLarge)
+    {
+        for (iIndex; iIndex < iMaxIndex; ++iIndex)
+        {
+            answer += my_string[iIndex];
+        }
+    }
+
+    /* string 제공 함수 */
+    string answer = "";
+    answer = my_string.replace(s, overwrite_string.size(), overwrite_string);
+    return answer;
+
+    /* 좋다고 생각한 풀이 */
+    for (auto i = 0; i < overwrite_string.size(); ++i)
+    {
+        my_string[i + s] = overwrite_string[i];
+    }
+    return my_string;
+
+    return answer;
 }
