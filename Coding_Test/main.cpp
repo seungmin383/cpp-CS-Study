@@ -4,61 +4,55 @@
 
 using namespace std;
 
-string solution(string my_string, string overwrite_string, int s);
+string solution(string str1, string str2);
 
 int main(void)
 {
-    cout << solution("He11oWor1d", "lloWorl", 2);
+    cout << solution("aaaaa", "bbbbbbbbbb");
 
     return 0;
 }
 
-string solution(string my_string, string overwrite_string, int s) {
-
-    /* 내 풀이 */
-    string answer{};
-
-    int iMaxIndex = my_string.length();
-    int iIndex{};
-    bool isLarge{ false };
-
-    if (iMaxIndex < overwrite_string.length())
-    {
-        iMaxIndex = overwrite_string.length();
-    }
-    else
-    {
-        isLarge = true;
-    }
-
-    for (int i = 0; i < s; ++i)
-    {
-        answer += my_string[i];
-        iIndex++;
-    }
-
-    answer += overwrite_string;
-    iIndex += overwrite_string.length();
-
-    if (isLarge)
-    {
-        for (iIndex; iIndex < iMaxIndex; ++iIndex)
-        {
-            answer += my_string[iIndex];
-        }
-    }
-
-    /* string 제공 함수 */
+string solution(string str1, string str2) {
     string answer = "";
-    answer = my_string.replace(s, overwrite_string.size(), overwrite_string);
-    return answer;
 
-    /* 좋다고 생각한 풀이 */
-    for (auto i = 0; i < overwrite_string.size(); ++i)
+    int index{};
+
+    while (true)
     {
-        my_string[i + s] = overwrite_string[i];
+        bool isFin1 = false;
+        bool isFin2 = false;
+
+        if (str1.length() <= index)
+        {
+            isFin1 = true;
+        }
+
+        if (str2.length() <= index)
+        {
+            isFin2 = true;
+        }
+
+        if (isFin1 && isFin2)
+        {
+            break;
+        }
+        else if (isFin1 && !isFin2)
+        {
+            answer += str2[index];
+        }
+        else if (!isFin1 && isFin2)
+        {
+            answer += str1[index];
+        }
+        else
+        {
+            answer += str1[index];
+            answer += str2[index];
+        }
+
+        index++;
     }
-    return my_string;
 
     return answer;
 }
