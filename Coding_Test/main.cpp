@@ -1,58 +1,31 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <numeric>
 
 using namespace std;
 
-string solution(string str1, string str2);
+string solution(vector<string> arr);
 
 int main(void)
 {
-    cout << solution("aaaaa", "bbbbbbbbbb");
+    //cout << solution("aaaaa", "bbbbbbbbbb");
 
     return 0;
 }
 
-string solution(string str1, string str2) {
+string solution(vector<string> arr) 
+{
+    /* 내가 푼 풀이 */
     string answer = "";
 
-    int index{};
-
-    while (true)
+    for (string str : arr)
     {
-        bool isFin1 = false;
-        bool isFin2 = false;
-
-        if (str1.length() <= index)
-        {
-            isFin1 = true;
-        }
-
-        if (str2.length() <= index)
-        {
-            isFin2 = true;
-        }
-
-        if (isFin1 && isFin2)
-        {
-            break;
-        }
-        else if (isFin1 && !isFin2)
-        {
-            answer += str2[index];
-        }
-        else if (!isFin1 && isFin2)
-        {
-            answer += str1[index];
-        }
-        else
-        {
-            answer += str1[index];
-            answer += str2[index];
-        }
-
-        index++;
+        answer += str;
     }
-
+    
     return answer;
+
+    /* 다른 사람이 푼 풀이 */
+    return accumulate(arr.begin(), arr.end(), string(""));
 }
