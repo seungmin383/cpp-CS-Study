@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <numeric>
+#include <set>
+#include <cmath>
 
 using namespace std;
 
@@ -9,23 +11,36 @@ string solution(vector<string> arr);
 
 int main(void)
 {
-    //cout << solution("aaaaa", "bbbbbbbbbb");
-
     return 0;
 }
 
-string solution(vector<string> arr) 
-{
-    /* 내가 푼 풀이 */
-    string answer = "";
+int MyPow(int a, int Num);
 
-    for (string str : arr)
+int solution(int a, int b, int c) {
+    int answer{1};
+
+    set<int> s = { a,b,c };
+    int Num = s.size(); // 1이면 444 / 2면 441 / 3이면 432
+
+    for (int i = 1; i <= (4 - Num); ++i)
     {
-        answer += str;
+        answer *= MyPow(a, i) + MyPow(b, i) + MyPow(c, i);
     }
-    
+ 
     return answer;
+}
 
-    /* 다른 사람이 푼 풀이 */
-    return accumulate(arr.begin(), arr.end(), string(""));
+int MyPow(int a, int Num)
+{
+    if (Num == 0)
+        return 1;
+    else if (Num == 1)
+        return a;
+
+    int aa = { 1 };
+    for (int i = 0; i < Num; ++i)
+    {
+        aa *= a;
+    }
+    return aa;
 }
