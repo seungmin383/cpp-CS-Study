@@ -1,46 +1,70 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include <numeric>
 #include <set>
 #include <cmath>
+#include <array>
 
 using namespace std;
 
-string solution(vector<string> arr);
+string solution(string bin1, string bin2);
 
 int main(void)
 {
+    solution("10", "11");
     return 0;
 }
 
-int MyPow(int a, int Num);
 
-int solution(int a, int b, int c) {
-    int answer{1};
 
-    set<int> s = { a,b,c };
-    int Num = s.size(); // 1이면 444 / 2면 441 / 3이면 432
+int strinigToint(string str)
+{
+    int idx {1};
+    int answer{};
 
-    for (int i = 1; i <= (4 - Num); ++i)
+    reverse(str.begin(), str.end());
+
+    for (char c : str)
     {
-        answer *= MyPow(a, i) + MyPow(b, i) + MyPow(c, i);
+        if (c == '1')
+        {
+            answer += idx;
+        }
+        idx *= 2;
     }
- 
     return answer;
 }
 
-int MyPow(int a, int Num)
+string intToString(int i)
 {
-    if (Num == 0)
-        return 1;
-    else if (Num == 1)
-        return a;
+    string str;
+    int answer = i;
 
-    int aa = { 1 };
-    for (int i = 0; i < Num; ++i)
+    while (true)
     {
-        aa *= a;
+        int ahrt{ answer / 2 };
+        int skajwl{ answer % 2 };
+
+        if (skajwl == 1)
+            str.push_back('1');
+        else if (skajwl == 0)
+            str.push_back('0');
+
+        if (ahrt == 0)
+        {
+            break;
+        }
+        
+        answer = ahrt;
     }
-    return aa;
+    reverse(str.begin(), str.end());
+    return str;
+}
+
+string solution(string bin1, string bin2) {
+
+    int a = strinigToint(bin1);
+    int b = strinigToint(bin2);
+
+    return intToString(a + b);
 }
