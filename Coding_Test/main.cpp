@@ -1,70 +1,68 @@
 #include <string>
 #include <vector>
-#include <numeric>
-#include <set>
-#include <cmath>
-#include <array>
 
 using namespace std;
-
-string solution(string bin1, string bin2);
-
-int main(void)
+int GCD(int a, int b)
 {
-    solution("10", "11");
-    return 0;
-}
-
-
-
-int strinigToint(string str)
-{
-    int idx {1};
-    int answer{};
-
-    reverse(str.begin(), str.end());
-
-    for (char c : str)
+    while (b != 0)
     {
-        if (c == '1')
-        {
-            answer += idx;
-        }
-        idx *= 2;
+        int r = a % b;
+        a = b;
+        b = r;
     }
-    return answer;
+    return a;
 }
 
-string intToString(int i)
+int LCM(int a, int b)
 {
-    string str;
-    int answer = i;
-
-    while (true)
-    {
-        int ahrt{ answer / 2 };
-        int skajwl{ answer % 2 };
-
-        if (skajwl == 1)
-            str.push_back('1');
-        else if (skajwl == 0)
-            str.push_back('0');
-
-        if (ahrt == 0)
-        {
-            break;
-        }
-        
-        answer = ahrt;
-    }
-    reverse(str.begin(), str.end());
-    return str;
+    return a / GCD(a, b) * b;
 }
 
-string solution(string bin1, string bin2) {
+int solution(vector<vector<int>> signals)
+{
+    /* ≥ª «Æ¿Ã */
+    vector<vector<bool>> vecCycles;
+    int lcmTime = 1;
+    
+    for (vector<int> blinker : signals)
+    {
+        vector<bool> cycle;
+        int totalCycle = 0;
 
-    int a = strinigToint(bin1);
-    int b = strinigToint(bin2);
+        for (int i = 0; i < blinker.size(); i++)
+        {
+            for (int j = 0; j < blinker[i]; j++)
+            {
+                if (i == 1)
+                    cycle.push_back(true);
+                else
+                    cycle.push_back(false);
+            }
 
-    return intToString(a + b);
+            totalCycle += blinker[i];
+        }
+
+        vecCycles.push_back(cycle);
+        lcmTime = LCM(lcmTime, totalCycle);
+    }
+
+    for (int i = 0; i < lcmTime; i++)
+    {
+        bool isYellow = true;
+
+        for (vector<bool> cycles : vecCycles)
+        {
+            if (!cycles[i % cycles.size()])
+            {
+                isYellow = false;
+                break;
+            }
+        }
+
+        if (isYellow)
+            return i + 1;
+    }
+    return -1;
+
+    /* */
 }
